@@ -6,7 +6,7 @@ type-annotated function add that takes
 """
 
 
-def add(a: float, b: float):
+def add(a: float, b: float) -> float:
     """
     function that reutrn the sum 
     of a and b
