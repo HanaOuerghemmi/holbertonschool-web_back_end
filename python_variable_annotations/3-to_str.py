@@ -4,7 +4,7 @@ type-annotated  str
 """
 
 
-def floor(n: float) -> str:
+def to_str(n: float) -> str:
     """
     function that reutrn str
     """
