@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-''' 
+'''
 Type Checking
 '''
 
@@ -7,7 +7,7 @@ from typing import Union, Any, Mapping, Tuple, List
 
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:
-    ''' 
+    '''
     Type Checking 
     '''
     zoomed_in: List = [
