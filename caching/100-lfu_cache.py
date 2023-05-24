@@ -25,22 +25,39 @@ class LFUCache(BaseCaching):
     def put(self, key, item):
         """dictionary
         """
-        if key and item:
-            if key in self.cache_data:
-                self._remove(key)
-            self._add(key, item)
+        if key or item is not None:
+            valuecache = self.get(key)
+            # Make a new
+            if valuecache is None:
+                if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                    keydel = self.leastrecent
+                    lendel = len(keydel) - 1
+                    del self.cache_data[keydel[lendel]]
+                    print("DISCARD: {}".format(self.leastrecent.pop()))
+            else:
+                del self.cache_data[key]
+
+            if key in self.leastrecent:
+                idxtodel = self.search_first(self.leastrecent, key)
+                self.leastrecent.pop(idxtodel)
+                self.leastrecent.insert(0, key)
+            else:
+                self.leastrecent.insert(0, key)
+
+            self.cache_data[key] = item
 
     def get(self, key):
         """
         Return the value linked
         """
-        if key is None or self.cache_data.get(key) is None:
-            return None
-        if key in self.cache_data:
-            value = self.cache_data[key]
-            self._remove(key)
-            self._add(key, value)
-            return value
+        valuecache = self.cache_data.get(key)
+
+        if valuecache:
+            idxtodel = self.search_first(self.leastrecent, key)
+            self.leastrecent.pop(idxtodel)
+            self.leastrecent.insert(0, key)
+
+        return valuecache
 
     def findLFU(self):
         ''' Return key of least frequently used item in cache.
@@ -53,4 +70,4 @@ class LFUCache(BaseCaching):
         lfus = [item[0] for item in items if item[1] == least]
         for key in self.keys:
             if key in lfus:
-                return 
+                return
