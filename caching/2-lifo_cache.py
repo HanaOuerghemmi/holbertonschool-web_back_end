@@ -2,8 +2,6 @@
 """
 LIFO caching
 """
-
-
 BaseCaching = __import__('base_caching').BaseCaching
 
 
@@ -11,6 +9,7 @@ class LIFOCache(BaseCaching):
     """
     LIFO Cache
     """
+
     def __init__(self):
         """
         overload
