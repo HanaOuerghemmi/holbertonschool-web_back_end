@@ -41,7 +41,7 @@ class LRUCache(BaseCaching):
             self._remove(self.next[self.head])
 
     def put(self, key, item):
-        """ 
+        """
         dictionary
         """
         if key and item:
