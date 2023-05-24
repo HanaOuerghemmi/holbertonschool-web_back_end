@@ -28,6 +28,8 @@ class LFUCache(BaseCaching):
         if key or item is not None:
             valuecache = self.get(key)
             # Make a new
+            if not key or not item:
+                return
             if valuecache is None:
                 if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
                     keydel = self.leastrecent
@@ -51,7 +53,8 @@ class LFUCache(BaseCaching):
         Return the value linked
         """
         valuecache = self.cache_data.get(key)
-
+        if not key or key not in self.cache_data:
+            return None
         if valuecache:
             idxtodel = self.search_first(self.leastrecent, key)
             self.leastrecent.pop(idxtodel)
@@ -59,15 +62,16 @@ class LFUCache(BaseCaching):
 
         return valuecache
 
-    def findLFU(self):
-        ''' Return key of least frequently used item in cache.
-            If multiple items have the same amount of uses, return the least
-            recently used one. '''
-        items = list(self.uses.items())
-        freqs = [item[1] for item in items]
-        least = min(freqs)
-
-        lfus = [item[0] for item in items if item[1] == least]
-        for key in self.keys:
-            if key in lfus:
-                return
+    def discard(self):
+        """
+        discard item and print
+        """
+        m_time = min(self.__counter.values())
+        keys = [k for k, v in self.__counter.items() if v == m_time]
+        low = 0
+        while self.__keys[low] not in keys:
+            low += 1
+        discard = self.__keys.pop(low)
+        del self.cache_data[discard]
+        del self.__counter[discard]
+        print('DISCARD: {}'.format(discard))
