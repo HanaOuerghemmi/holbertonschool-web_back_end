@@ -3,9 +3,11 @@
 """
 
 from flask import Flask, request, render_template
+from flask_babel import Babel
 from os import getenv
 
 app = Flask(__name__, static_url_path='')
+babel = Babel(app)
 
 
 class Config(object):
