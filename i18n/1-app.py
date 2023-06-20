@@ -8,12 +8,15 @@ from os import getenv
 
 app = Flask(__name__, static_url_path='')
 
+
 class Config(object):
     """ Setup - Babel configuration """
     LANGUAGES = ['en', 'fr']
     # these are the inherent defaults just btw
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
+
+app.config.from_object('1-app.Config')
 
 @app.route('/', methods=['GET'], strict_slashes=False)
 def index():
