@@ -24,7 +24,7 @@ class Auth:
 
     def register_user(self, email: str, password: str) -> User:
         """
-        Registers and returns a new user if email isn't listed
+        Registers and returns a new user
         """
         try:
             user = self._db.find_user_by(email=email)
