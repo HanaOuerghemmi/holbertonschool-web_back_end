@@ -102,6 +102,8 @@ class Cache:
         and return a key
         """
         value = self._redis.get(key)
+        if fn:
+            value = fn(value)
 
         return value
 
