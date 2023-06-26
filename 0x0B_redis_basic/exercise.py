@@ -3,7 +3,8 @@
 exercic file
 """
 
-from typing import Union
+from functools import wraps
+from typing import Union, Callable, Optional
 from uuid import uuid4, UUID
 
 import redis
@@ -26,7 +27,8 @@ class Cache:
 
         return random_key
 
-    def get(self, key, data: Union[str, bytes, int, float]) -> str:
+    def get(self, key: str,
+            fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
         """
         store input data in dedis using a random key
         and return a key
@@ -52,3 +54,18 @@ class Cache:
         except Exception:
             value = 0
         return value
+
+
+def count_calls(method: Callable) -> Callable:
+    """ Decortator for counting how many times a function
+    has been called """
+
+    key = method.__qualname__
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """ Wrapper for decorator functionality """
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+
+    return wrapper
