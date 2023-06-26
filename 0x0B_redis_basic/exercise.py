@@ -25,7 +25,8 @@ class Cache:
         self._redis.set(random_key, data)
 
         return random_key
-    def get (self, key, data: Union[str, bytes, int, float])-> str:
+
+    def get(self, key, data: Union[str, bytes, int, float]) -> str:
         """
         store input data in dedis using a random key
         and return a key
@@ -33,9 +34,6 @@ class Cache:
         value = self._redis.get(key)
 
         return value
-    
-
-
 
     def get_str(self, key: str) -> str:
         """
