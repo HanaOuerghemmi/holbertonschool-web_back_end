@@ -33,3 +33,4 @@ export default async function handleProfileSignup(
 
   return [promise1, promise2];
 }
+
