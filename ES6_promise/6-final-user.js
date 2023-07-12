@@ -1,7 +1,11 @@
 import signUpUser from './4-user-promise';
 import uploadPhoto from './5-photo-reject';
 
-async function handleProfileSignup(firstName, lastName, fileName) {
+export default async function handleProfileSignup(
+  firstName,
+  lastName,
+  fileName
+) {
   const promise1 = {
     status: 'pending ',
   };
@@ -29,5 +33,3 @@ async function handleProfileSignup(firstName, lastName, fileName) {
 
   return [promise1, promise2];
 }
-
-export default handleProfileSignup;
