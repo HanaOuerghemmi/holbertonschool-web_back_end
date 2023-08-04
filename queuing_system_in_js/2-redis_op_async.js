@@ -1,5 +1,4 @@
 import redis from 'redis';
-// Task 2 - asycn Implemnetation
 import { promisify } from 'util';
 
 const cli = redis.createClient();
