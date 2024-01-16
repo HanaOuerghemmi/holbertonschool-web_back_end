@@ -41,10 +41,10 @@ class DB:
         Adds user to database
         Return: User Object
         """
-        user = User(email=email, hashed_password=hashed_password)
-        self._session.add(user)
+        nUser = User(email=email, hashed_password=hashed_password)
+        self._session.add(nUser)
         self._session.commit()
-        return user
+        return nUser
 
     def find_user_by(self, **kwargs) -> User:
         """
