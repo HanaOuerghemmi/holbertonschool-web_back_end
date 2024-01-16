@@ -13,11 +13,13 @@ from user import User
 
 
 class DB:
-    """DB class
+    """
+    DB class
     """
 
     def __init__(self) -> None:
-        """Initialize a new DB instance
+        """
+        Initialize a new DB instance
         """
         self._engine = create_engine("sqlite:///a.db", echo=True)
         Base.metadata.drop_all(self._engine)
@@ -26,7 +28,8 @@ class DB:
 
     @property
     def _session(self) -> Session:
-        """Memoized session object
+        """
+        Memoized session object
         """
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
@@ -34,16 +37,18 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """ Adds user to database
+        """
+        Adds user to database
         Return: User Object
         """
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()
         return user
-    
+
     def find_user_by(self, **kwargs) -> User:
-        """ Finds user by key word args
+        """
+        Finds user by key word args
         Return: First row found in the users table as filtered by kwargs
         """
         if not kwargs:
@@ -58,10 +63,21 @@ class DB:
 
         if user is None:
             raise NoResultFound
-        
 
         return user
-    
-    
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """ 
+        Update users attributes
+        Returns: None
+        """
+        user = self.find_user_by(id=user_id)
 
-    
+        column_names = User.__table__.columns.keys()
+        for key in kwargs.keys():
+            if key not in column_names:
+                raise ValueError
+
+        for key, value in kwargs.items():
+            setattr(user, key, value)
+
+        self._session.commit()
