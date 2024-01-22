@@ -67,7 +67,7 @@ class DB:
         return user
 
     def update_user(self, user_id: int, **kwargs) -> None:
-        """ 
+        """
         Update users attributes
         Returns: None
         """
