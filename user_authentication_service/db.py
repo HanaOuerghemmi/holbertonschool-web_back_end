@@ -26,7 +26,6 @@ class DB:
         Base.metadata.create_all(self._engine)
         self.__session = None
 
-
     @property
     def _session(self):
         """
@@ -66,6 +65,7 @@ class DB:
             raise NoResultFound
 
         return user
+
     def update_user(self, user_id: int, **kwargs) -> None:
         """ 
         Update users attributes
